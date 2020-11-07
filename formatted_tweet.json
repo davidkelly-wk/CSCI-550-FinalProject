@@ -1,0 +1,95 @@
+{
+   "created_at":"Sat Nov 07 21:37:56 +0000 2020",
+   "id":1325190777702551552,
+   "id_str":"1325190777702551552",
+   "text":"@plumsmuggler72 I seriously haven't laughed this hard for a LONG time",
+   "display_text_range":[
+      16,
+      69
+   ],
+   "source":"\u003ca href=\"http:\/\/twitter.com\/download\/android\" rel=\"nofollow\"\u003eTwitter for Android\u003c\/a\u003e",
+   "truncated":false,
+   "in_reply_to_status_id":1325190558835331072,
+   "in_reply_to_status_id_str":"1325190558835331072",
+   "in_reply_to_user_id":349969968,
+   "in_reply_to_user_id_str":"349969968",
+   "in_reply_to_screen_name":"plumsmuggler72",
+   "user":{
+      "id":884707518345134080,
+      "id_str":"884707518345134080",
+      "name":"Rising Nation",
+      "screen_name":"PhxRisingNation",
+      "location":"Flavourtowne",
+      "url":"http:\/\/youtube.com\/prfcfanshow",
+      "description":"\u26bd\ufe0f\ud83d\udc26",
+      "translator_type":"none",
+      "protected":false,
+      "verified":false,
+      "followers_count":1050,
+      "friends_count":297,
+      "listed_count":7,
+      "favourites_count":81862,
+      "statuses_count":30056,
+      "created_at":"Tue Jul 11 09:34:44 +0000 2017",
+      "utc_offset":null,
+      "time_zone":null,
+      "geo_enabled":true,
+      "lang":null,
+      "contributors_enabled":false,
+      "is_translator":false,
+      "profile_background_color":"F5F8FA",
+      "profile_background_image_url":"",
+      "profile_background_image_url_https":"",
+      "profile_background_tile":false,
+      "profile_link_color":"1DA1F2",
+      "profile_sidebar_border_color":"C0DEED",
+      "profile_sidebar_fill_color":"DDEEF6",
+      "profile_text_color":"333333",
+      "profile_use_background_image":true,
+      "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1298442530070044674\/38d1HWFE_normal.jpg",
+      "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1298442530070044674\/38d1HWFE_normal.jpg",
+      "profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/884707518345134080\/1603441697",
+      "default_profile":true,
+      "default_profile_image":false,
+      "following":null,
+      "follow_request_sent":null,
+      "notifications":null
+   },
+   "geo":null,
+   "coordinates":null,
+   "place":null,
+   "contributors":null,
+   "is_quote_status":false,
+   "quote_count":0,
+   "reply_count":0,
+   "retweet_count":0,
+   "favorite_count":0,
+   "entities":{
+      "hashtags":[
+         
+      ],
+      "urls":[
+         
+      ],
+      "user_mentions":[
+         {
+            "screen_name":"plumsmuggler72",
+            "name":"John Gustafson",
+            "id":349969968,
+            "id_str":"349969968",
+            "indices":[
+               0,
+               15
+            ]
+         }
+      ],
+      "symbols":[
+         
+      ]
+   },
+   "favorited":false,
+   "retweeted":false,
+   "filter_level":"low",
+   "lang":"en",
+   "timestamp_ms":"1604785076915"
+}

@@ -1,0 +1,24 @@
+@startuml
+object twitter
+object kafka
+object producer
+object average_sentiment {
+consumer
+calculate_average()
+plot()
+}
+object other_statistic {
+consumer
+some_method()
+}
+object metrics
+
+twitter --|> producer
+producer --|> kafka
+kafka --|> average_sentiment
+kafka --|> other_statistic
+
+metrics *-- other_statistic
+metrics *-- average_sentiment
+metrics *-- producer
+@enduml

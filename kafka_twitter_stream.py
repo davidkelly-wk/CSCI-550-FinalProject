@@ -19,7 +19,7 @@ class StdOutListener(StreamListener):
         producer.send("trump", data.encode('utf-8'))
         if 'text' in json_obj:
             if json_obj['lang'] == 'en':
-                self.sentiment_analyzer.score_text(json_obj["text"])
+                score = self.sentiment_analyzer.score_text(json_obj["text"])
 
         return True
     def on_error(self, status):

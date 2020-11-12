@@ -13,9 +13,11 @@ class AverageSentimentConsumer:
             group_id=None,
             value_deserializer=lambda x: loads(x.decode('utf-8')))
         self.sentiment_analyzer = Sentiment()
+        self.average_sentiment(self.consumer)
         #self.data_aggregator = Data_Aggregator()
     
     def calculate_sentiment_score(self, message):
+        score = float('inf') # in case message not in english
         if 'text' in message:
             if message['lang'] == 'en':
                 score = self.sentiment_analyzer.score_text(message['text'])
@@ -28,10 +30,11 @@ class AverageSentimentConsumer:
         for message in consumer:
             message = message.value
             score = self.calculate_sentiment_score(message)
-            if avg_score != float(0): # if this is the first message, just add it rather than average it
-                avg_score = (avg_score + score) / 2
-            else: 
-                avg_score = score
+            if score != float('inf'): # if 'inf' something went wrong calculating the score
+                if avg_score != float(0): # if this is the first message, just add it rather than average it
+                    avg_score = (avg_score + score) / 2
+                else: 
+                    avg_score = score
             print('Avg score: {} after message {}'.format(avg_score, i))
         i += 1
         if i % 10 == 0: # plot after 10 messages

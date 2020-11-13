@@ -1,24 +1,42 @@
 @startuml
-object twitter
-object kafka
-object producer
-object average_sentiment {
-consumer
-calculate_average()
-plot()
+!define SPRITESURL https://raw.githubusercontent.com/rabelenda/cicon-plantuml-sprites/v1.0/sprites
+!includeurl SPRITESURL/kafka.puml
+allow_mixing
+
+title Twitter Sentiment Analysis System
+
+skinparam monochrome true
+
+rectangle "twitter" as twitter
+queue "<$kafka>" as kafka
+
+object twitter_stream_producer {
+on_data()
+on_error()
 }
-object other_statistic {
-consumer
+object average_sentiment_consumer {
+calculate_sentiment_score()
+average_sentiment()
+}
+object other_statistic_consumer {
 some_method()
 }
-object metrics
+object data_aggregator {
+add_score()
+add_point_to_graph()
+update_plot()
+}
+object sentiment {
+score_text()
+remove_url()
+}
 
-twitter --|> producer
-producer --|> kafka
-kafka --|> average_sentiment
-kafka --|> other_statistic
+twitter --> twitter_stream_producer
+twitter_stream_producer --> kafka
 
-metrics *-- other_statistic
-metrics *-- average_sentiment
-metrics *-- producer
+kafka --> average_sentiment_consumer
+kafka --> other_statistic_consumer
+
+sentiment --> average_sentiment_consumer
+data_aggregator --> average_sentiment_consumer
 @enduml

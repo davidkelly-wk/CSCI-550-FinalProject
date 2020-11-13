@@ -1,7 +1,7 @@
 # CSCI-550-FinalProject
 ## Datamining Final Project
 
-## Start Zookeeper and Kafka:
+## Start Zookeeper and Kafka from Kafka install directory:
 `bin/zookeeper-server-start.sh config/zookeeper.properties`
 
 `bin/kafka-server-start.sh config/server.properties`
@@ -11,3 +11,6 @@
 
 ## Check that topics are being published
 `bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic twitter --from-beginning`
+
+# System Diagram
+![image](system.png)

@@ -1,7 +1,7 @@
 # CSCI-550-FinalProject
 ## Datamining Final Project
 
-## Start Zookeeper and Kafka:
+## Start Zookeeper and Kafka from Kafka install directory:
 `bin/zookeeper-server-start.sh config/zookeeper.properties`
 
 `bin/kafka-server-start.sh config/server.properties`
@@ -19,3 +19,6 @@ Make sure the topic you enter matches that above
 ## Start the consumer
 Make sure the topic you enter matches that above
 `python average_sentiment_consumerV2.py`
+
+# System Diagram
+![image](system.png)

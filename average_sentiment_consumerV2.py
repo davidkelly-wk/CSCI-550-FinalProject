@@ -9,9 +9,7 @@ class AverageSentimentConsumer():
             bootstrap_servers=['localhost:9092'],
             auto_offset_reset='earliest',
             enable_auto_commit=True,
-            auto_commit_interval_ms =  5000,
-            fetch_max_bytes = 128,
-            max_poll_records = 100,
+            auto_commit_interval_ms =  10000,
             group_id=None,
             value_deserializer=lambda x: loads(x.decode('utf-8')))
         self.sentiment_analyzer = Sentiment()
@@ -36,17 +34,25 @@ class AverageSentimentConsumer():
                 else: 
                     avg_score = score
             print('Avg score: {} after message {}'.format(avg_score, i))
-            i += 1
-            if i > 10:
-                break
         return i, avg_score
         
 
     def start_consumer(self):
         while True:
-            fetched_records, avg_score = self.average_sentiment(self.consumer)
-            print('Records fetched: {} with avg. score : {}'.format(fetched_records, avg_score))
-        self.average_sentiment(self.consumer)
+            # Response format is {TopicPartiton('topic1', 1): [msg1, msg2]}
+            msg_pack = self.consumer.poll(timeout_ms=10000)
+            for tp, messages in msg_pack.items():
+                print(len(msg_pack.items()))
+                print(len(messages))
+            # message value and key are raw bytes -- decode if necessary!
+            # e.g., for unicode: `message.value.decode('utf-8')`
+                for message in messages:
+                    print ("%s:%d:%d: key=%s value=%s" % (tp.topic, tp.partition,
+                                                    message.offset, message.key,
+                                                    message.value))
+            #fetched_records, avg_score = self.average_sentiment(self.consumer)
+            #print('Records fetched: {} with avg. score : {}'.format(fetched_records, avg_score))
+        #self.average_sentiment(self.consumer)
 
 if __name__ == "__main__":
     topic = input('Enter a kafka topic name: ')

@@ -5,11 +5,10 @@ import numpy as np
 from pylive import live_plotter
 
 class AverageSentimentConsumer():
-    def __init__(self, topics):
+    def __init__(self, topic):
         self.consumers = []
-        # for topic in topics:
         self.consumer = KafkaConsumer(
-            topics,
+            topic,
             bootstrap_servers=['localhost:9092'],
             auto_offset_reset='earliest',
             enable_auto_commit=True,
@@ -82,9 +81,6 @@ class AverageSentimentConsumer():
             print('Records fetched: {} with avg. score : {}'.format(fetched_records, avg_score))
 
 if __name__ == "__main__":
-    topics = 'twitter'#['trump', 'biden']
-    # run_average_consumer = input('Do you wish to run the sentiment averaging consumer (y/n)? ')
-
-
-    asc = AverageSentimentConsumer(topics)
+    topic = 'trumpbiden'
+    asc = AverageSentimentConsumer(topic)
     asc.start_consumer()

@@ -11,11 +11,12 @@ def live_plotter(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0.1)
         fig = plt.figure(figsize=(13,6))
         ax = fig.add_subplot(111)
         # create a variable for the line so we can later update it
-        line1, = ax.plot(x_vec,y1_data,'-o',alpha=0.8)
-        line2, = ax.plot(x_vec,y2_data, '-o', alpha=0.8)
+        line1, = ax.plot(x_vec, y1_data, 'r-o', alpha=0.8, label='Trump')
+        line2, = ax.plot(x_vec, y2_data, 'b-o', alpha=0.8, label='Biden')
         #update plot label/title
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
+        ax.legend(loc='upper center', shadow=True, fontsize='x-large')
         plt.show()
     
     # after the figure, axis, and line are created, we only need to update the y-data
@@ -23,8 +24,6 @@ def live_plotter(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0.1)
     line2.set_ydata(y2_data)
     # adjust limits if new data goes beyond bounds
     plt.ylim([-1, 1])
-    # if np.min(y1_data)<=line1.axes.get_ylim()[0] or np.max(y1_data)>=line1.axes.get_ylim()[1]:
-    #     plt.ylim([np.min(y1_data)-np.std(y1_data),np.max(y1_data)+np.std(y1_data)])
     # this pauses the data so the figure/axis can catch up - the amount of pause can be altered above
     plt.pause(pause_time)
     
@@ -37,17 +36,16 @@ def live_plotter_xy(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0
         plt.ion()
         fig = plt.figure(figsize=(13,6))
         ax = fig.add_subplot(111)
-        line1, = ax.plot(x_vec,y1_data,'r-o',alpha=0.8)
-        line2, = ax.plot(x_vec,y2_data, '-o', alpha=0.8)
+        line1, = ax.plot(x_vec,y1_data,'r-o',alpha=0.8,  label='Trump')
+        line2, = ax.plot(x_vec,y2_data,'b-o', alpha=0.8, label='Biden')
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
+        ax.legend(loc='upper center', shadow=True, fontsize='x-large')
         plt.show()
         
     line1.set_data(x_vec,y1_data)
     line2.set_data(x_vec,y2_data)
     plt.xlim(np.min(x_vec),np.max(x_vec))
-    # if np.min(y1_data)<=line1.axes.get_ylim()[0] or np.max(y1_data)>=line1.axes.get_ylim()[1]:
-    #     plt.ylim([np.min(y1_data)-np.std(y1_data),np.max(y1_data)+np.std(y1_data)])
     plt.ylim([-1, 1])
     plt.pause(pause_time)
     

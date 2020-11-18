@@ -50,9 +50,6 @@ class TwitterStreamListener(StreamListener):
         print (status)
 
 if __name__ == "__main__":
-    topics = ['trump', 'biden'] #input('Enter a kafka topic name: ')
-    # run_producer = input('Do you wish to run the twitter producer for (y/n)? ')
-    # if run_producer == 'y':
-    # for topic in topics:
-    tsp = TwitterStreamProducer('twitter')
+    topic = 'TrumpBiden'
+    tsp = TwitterStreamProducer(topic)
     tsp.stream_tweets()

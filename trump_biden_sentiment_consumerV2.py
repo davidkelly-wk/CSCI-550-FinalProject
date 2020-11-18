@@ -43,14 +43,14 @@ class AverageSentimentConsumer():
             message = message.value
             score = self.calculate_sentiment_score(message)
             if score != float('inf'): # if 'inf' something went wrong calculating the score
-                if 'trump' in message['text']:
+                if 'trump' in message['text'].lower():
                     trump_i += 1
                     if avg_score_trump != float(0): # if this is the first message, just add it rather than average it
 
                         avg_score_trump = (avg_score_trump + score) / 2
                     else:
                         avg_score_trump = score
-                if 'biden' in message['text']:
+                if 'biden' in message['text'].lower():
                     biden_i += 1
                     if avg_score_biden != float(0):  # if this is the first message, just add it rather than average it
 
@@ -77,8 +77,7 @@ class AverageSentimentConsumer():
 
     def start_consumer(self):
         while True:
-            fetched_records, avg_score = self.average_sentiment(self.consumer)
-            print('Records fetched: {} with avg. score : {}'.format(fetched_records, avg_score))
+            self.average_sentiment(self.consumer)
 
 if __name__ == "__main__":
     topic = 'trumpbiden'

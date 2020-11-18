@@ -50,6 +50,6 @@ class TwitterStreamListener(StreamListener):
         print (status)
 
 if __name__ == "__main__":
-    topic = 'TrumpBiden'
+    topic = 'trumpbiden'
     tsp = TwitterStreamProducer(topic)
     tsp.stream_tweets()

@@ -61,13 +61,13 @@ class AverageSentimentConsumer():
                 # print('Avg score trump: {} after message {}'.format(avg_score_trump, trump_i))
                 # print('Avg score biden: {} after message {}'.format(avg_score_biden, biden_i))
 
-            consume_rate = consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate']
             #send to graph
             self.y_vec_trump[-1] = avg_score_trump
             self.y_vec_biden[-1] = avg_score_biden
             self.line_trump, self.line_biden = live_plotter(self.x_vec, self.y_vec_trump, self.y_vec_biden,  self.line_trump, self.line_biden)
             self.y_vec_trump = np.append(self.y_vec_trump[1:], 0.0)
-            self.y_vec_biden = np.append(self.y_vec_biden[1:], 0.0)    
+            self.y_vec_biden = np.append(self.y_vec_biden[1:], 0.0)   
+        consume_rate = consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate'] 
 
     def start_consumer(self):
         while True:

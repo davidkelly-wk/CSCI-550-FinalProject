@@ -17,6 +17,11 @@ def live_plotter(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0.1)
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
         ax.legend(loc='upper center', shadow=True, fontsize='x-large')
+        textstr = '\n'.join((
+            r'$\Trump Average: %.2f$' % (np.average(y1_data),),
+            r'$\Biden Average: %.2f$' % (np.average(y2_data),)))
+        ax.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+                verticalalignment='top')  # , bbox=props)
         plt.show()
     
     # after the figure, axis, and line are created, we only need to update the y-data
@@ -41,6 +46,11 @@ def live_plotter_xy(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
         ax.legend(loc='upper center', shadow=True, fontsize='x-large')
+        textstr = '\n'.join((
+            r'$\Trump Average: %.2f$' % (np.average(y1_data),),
+            r'$\Biden Average: %.2f$' % (np.average(y2_data),)))
+        ax.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+                verticalalignment='top')#, bbox=props)
         plt.show()
         
     line1.set_data(x_vec,y1_data)

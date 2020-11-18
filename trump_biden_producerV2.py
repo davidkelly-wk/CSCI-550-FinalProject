@@ -34,7 +34,7 @@ class TwitterStreamProducer():
             listener = TwitterStreamListener()
             auth = self.twitter_authenticator.authenticate_twitter_app()
             stream = Stream(auth, listener)
-            stream.filter(follow=['25073877', '939091'], stall_warnings=True, languages= ["en"])
+            stream.filter(track=['trump', 'biden'], stall_warnings=True, languages= ["en"])
         
 
 class TwitterStreamListener(StreamListener):
@@ -50,8 +50,9 @@ class TwitterStreamListener(StreamListener):
         print (status)
 
 if __name__ == "__main__":
-    topic = input('Enter a kafka topic name: ')
-    run_producer = input('Do you wish to run the twitter producer (y/n)? ')
-    if run_producer == 'y':
-        tsp = TwitterStreamProducer(topic)
-        tsp.stream_tweets()
+    topics = ['trump', 'biden'] #input('Enter a kafka topic name: ')
+    # run_producer = input('Do you wish to run the twitter producer for (y/n)? ')
+    # if run_producer == 'y':
+    # for topic in topics:
+    tsp = TwitterStreamProducer('twitter')
+    tsp.stream_tweets()

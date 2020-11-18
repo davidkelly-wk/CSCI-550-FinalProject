@@ -17,10 +17,10 @@ def live_plotter(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0.1)
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
         ax.legend(loc='upper center', shadow=True, fontsize='x-large')
-        # textstr = 'Trump Average: '+str(round(np.average(y1_data),5))+'\nBiden Average: '+str(round(np.average(y2_data), 5))
-        # # print(textstr)
-        # text =plt.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
-        #         verticalalignment='top')  # , bbox=props)
+            # textstr = 'Trump Average: '+str(round(np.average(y1_data),5))+'\nBiden Average: '+str(round(np.average(y2_data), 5))
+            # # print(textstr)
+            # text =plt.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+            #         verticalalignment='top')  # , bbox=props)
         plt.show()
     
     # after the figure, axis, and line are created, we only need to update the y-data

@@ -1,6 +1,7 @@
 from kafka import KafkaConsumer
 from json import loads
 from sentiment import *
+from pylive_1line import *
 
 class AverageSentimentConsumer():
     def __init__(self, topic):
@@ -13,6 +14,11 @@ class AverageSentimentConsumer():
             group_id=None,
             value_deserializer=lambda x: loads(x.decode('utf-8')))
         self.sentiment_analyzer = Sentiment()
+
+        size = 100
+        self.x_vec = np.linspace(0, 1, size + 1)[0:-1]
+        self.y_vec = np.zeros(len(self.x_vec))
+        self.line1 = []
 
     def calculate_sentiment_score(self, message):
         score = float('inf') # in case message not in english
@@ -40,9 +46,12 @@ class AverageSentimentConsumer():
                         avg_score = score
                 print('Avg score: {} after message {}'.format(avg_score, i))
                 i += 1
+                # send to graph
+                self.y_vec[-1] = avg_score
+                self.line1 = live_plotter(self.x_vec, self.y_vec, self.line1)
+                self.y_vec = np.append(self.y_vec[1:], 0.0)
         consume_rate = consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate']
-        return i, avg_score
-        
+
 
     def start_consumer(self):
         while True:

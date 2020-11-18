@@ -2,7 +2,7 @@ from kafka import KafkaConsumer
 from json import loads
 from sentiment import *
 import numpy as np
-from pylive import live_plotter
+from pylive_2line import live_plotter
 
 class AverageSentimentConsumer():
     def __init__(self, topic):

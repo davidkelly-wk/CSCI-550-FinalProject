@@ -1,4 +1,4 @@
-from pylive import live_plotter
+from pylive_2line import live_plotter
 import numpy as np
 
 if __name__=='__main__':

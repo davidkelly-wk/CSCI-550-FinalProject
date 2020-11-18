@@ -62,6 +62,7 @@ class AverageSentimentConsumer():
             print('Avg score biden: {} after message {}'.format(avg_score_biden, biden_i))
 
             if biden_i > 10 or trump_i > 10:
+                consume_rate = consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate']
                 #send to graph
                 self.y_vec_trump[-1] = avg_score_trump
                 self.y_vec_biden[-1] = avg_score_biden

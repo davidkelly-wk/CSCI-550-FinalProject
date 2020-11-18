@@ -31,7 +31,7 @@ class AverageSentimentConsumer():
         if 'text' in message:
             if message['lang'] == 'en':
                 score = self.sentiment_analyzer.score_text(message['text'])
-                print('Message score: {} for message: {}'.format(score, message['text']))
+                # print('Message score: {} for message: {}'.format(score, message['text']))
         return score
 
     def average_sentiment(self, consumer):
@@ -58,8 +58,8 @@ class AverageSentimentConsumer():
                     else:
                         avg_score_biden = score
 
-            print('Avg score trump: {} after message {}'.format(avg_score_trump, trump_i))
-            print('Avg score biden: {} after message {}'.format(avg_score_biden, biden_i))
+            # print('Avg score trump: {} after message {}'.format(avg_score_trump, trump_i))
+            # print('Avg score biden: {} after message {}'.format(avg_score_biden, biden_i))
 
             if biden_i > 10 or trump_i > 10:
                 #send to graph

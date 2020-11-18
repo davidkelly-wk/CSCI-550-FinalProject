@@ -17,16 +17,21 @@ def live_plotter(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0.1)
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
         ax.legend(loc='upper center', shadow=True, fontsize='x-large')
-        textstr = '\n'.join((
-            r'$\Trump Average: %.2f$' % (np.average(y1_data),),
-            r'$\Biden Average: %.2f$' % (np.average(y2_data),)))
-        ax.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
-                verticalalignment='top')  # , bbox=props)
+        # textstr = 'Trump Average: '+str(round(np.average(y1_data),5))+'\nBiden Average: '+str(round(np.average(y2_data), 5))
+        # # print(textstr)
+        # text =plt.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+        #         verticalalignment='top')  # , bbox=props)
         plt.show()
     
     # after the figure, axis, and line are created, we only need to update the y-data
     line1.set_ydata(y1_data)
     line2.set_ydata(y2_data)
+    # textstr = 'Trump Average: ' + str(round(np.average(y1_data), 5)) + '\nBiden Average: ' + str(
+    #     round(np.average(y2_data), 5))
+    # print(textstr)
+    # text = plt.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+    #                 verticalalignment='top')
+    # text.set_text(textstr)
     # adjust limits if new data goes beyond bounds
     plt.ylim([-1, 1])
     # this pauses the data so the figure/axis can catch up - the amount of pause can be altered above
@@ -45,16 +50,21 @@ def live_plotter_xy(x_vec,y1_data,y2_data,line1,line2,identifier='',pause_time=0
         line2, = ax.plot(x_vec,y2_data,'b-o', alpha=0.8, label='Biden')
         plt.ylabel('Sentiment')
         plt.title('Trump vs Biden'.format(identifier))
-        ax.legend(loc='upper center', shadow=True, fontsize='x-large')
-        textstr = '\n'.join((
-            r'$\Trump Average: %.2f$' % (np.average(y1_data),),
-            r'$\Biden Average: %.2f$' % (np.average(y2_data),)))
-        ax.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
-                verticalalignment='top')#, bbox=props)
+        plt.legend(loc='upper center', shadow=True, fontsize='x-large')
+        # textstr = 'Trump Average: '+str(round(np.average(y1_data),5))+'\nBiden Average: '+str(round(np.average(y2_data), 5))
+        # # print(textstr)
+        # text = plt.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+        #         verticalalignment='top')#, bbox=props)
         plt.show()
         
     line1.set_data(x_vec,y1_data)
     line2.set_data(x_vec,y2_data)
+    # textstr = 'Trump Average: ' + str(round(np.average(y1_data), 5)) + '\nBiden Average: ' + str(
+    #     round(np.average(y2_data), 5))
+    # print(textstr)
+    # text = plt.text(0, 0.95, textstr, fontsize='x-large', horizontalalignment='left',
+    #                 verticalalignment='top')
+    # text.set_text(textstr)  # , bbox=props)
     plt.xlim(np.min(x_vec),np.max(x_vec))
     plt.ylim([-1, 1])
     plt.pause(pause_time)

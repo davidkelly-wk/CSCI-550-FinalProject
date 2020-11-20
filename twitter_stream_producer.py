@@ -30,9 +30,7 @@ class TwitterStreamProducer():
         self.metrics = metrics.Metrics(producer=producer)
 
     def stream_tweets(self):
-        timerThread = threading.Timer(10, self.log_metrics)
-        timerThread.daemon = True
-        timerThread.start()
+        self.log_metrics()
         while True:
             listener = TwitterStreamListener()
             auth = self.twitter_authenticator.authenticate_twitter_app()
@@ -40,8 +38,11 @@ class TwitterStreamProducer():
             #stream.filter(track="twitter", stall_warnings=True, languages= ["en"])
 
     def log_metrics(self):
-       producer_metrics = self.metrics.get_producer_metrics()
-       print(producer_metrics)
+        producer_metrics = self.metrics.get_producer_metrics()
+        print(producer_metrics)
+        timerThread = threading.Timer(10, self.log_metrics)
+        timerThread.daemon = True
+        timerThread.start()
         
 
 class TwitterStreamListener(StreamListener):

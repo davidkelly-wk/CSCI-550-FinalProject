@@ -55,13 +55,14 @@ class AverageSentimentConsumer():
                 self.y_vec = np.append(self.y_vec[1:], 0.0)
 
     def log_metrics(self):
-       consumer_metrics = self.metrics.get_consumer_metrics()
-       print(consumer_metrics)
-
-    def start_consumer(self):
+        consumer_metrics = self.metrics.get_consumer_metrics()
+        print(consumer_metrics)
         timerThread = threading.Timer(10, self.log_metrics)
         timerThread.daemon = True
         timerThread.start()
+
+    def start_consumer(self):
+        self.log_metrics()
         while True:
             self.average_sentiment(self.consumer)
 

@@ -2,6 +2,8 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 from kafka import KafkaProducer
+import threading
+import metrics
 import json
 
 #JoeBiden id: 939091
@@ -28,22 +30,32 @@ class TwitterStreamProducer():
         global topic
         topic = topic_name
         self.twitter_authenticator = TwitterAuthenticator()
+        self.metrics = metrics.Metrics(producer=producer)
 
     def stream_tweets(self):
+        timerThread = threading.Timer(10, self.log_metrics)
+        timerThread.daemon = True
+        timerThread.start()
         while True:
             listener = TwitterStreamListener()
             auth = self.twitter_authenticator.authenticate_twitter_app()
             stream = Stream(auth, listener)
             stream.filter(track=['trump', 'biden'], stall_warnings=True, languages= ["en"])
+
+    def log_metrics(self):
+       producer_metrics = self.metrics.get_producer_metrics()
+       print(producer_metrics)
         
 
 class TwitterStreamListener(StreamListener):
     def on_data(self, data):
         producer.send(topic, data.encode('utf-8'))
+        """
         json_obj = json.loads(data)
         if 'text' in json_obj:
             if json_obj['lang'] == 'en':
                 print('Message {}'.format(json_obj['text']))
+        """
         return True
 
     def on_error(self, status):

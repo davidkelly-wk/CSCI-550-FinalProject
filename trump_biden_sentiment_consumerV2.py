@@ -2,6 +2,8 @@ from kafka import KafkaConsumer
 from json import loads
 from sentiment import *
 import numpy as np
+import metrics
+import threading
 from pylive_2line import live_plotter
 
 class AverageSentimentConsumer():
@@ -16,6 +18,10 @@ class AverageSentimentConsumer():
             group_id=None,
             value_deserializer=lambda x: loads(x.decode('utf-8')))
         self.sentiment_analyzer = Sentiment()
+        self.metrics = metrics.Metrics(consumer=self.consumer)
+        timerThread = threading.Timer(10, self.log_metrics)
+        timerThread.daemon = True
+        timerThread.start()
 
         size = 100
         self.x_vec = np.linspace(0, 1, size + 1)[0:-1]
@@ -66,8 +72,11 @@ class AverageSentimentConsumer():
             self.y_vec_biden[-1] = avg_score_biden
             self.line_trump, self.line_biden = live_plotter(self.x_vec, self.y_vec_trump, self.y_vec_biden,  self.line_trump, self.line_biden)
             self.y_vec_trump = np.append(self.y_vec_trump[1:], 0.0)
-            self.y_vec_biden = np.append(self.y_vec_biden[1:], 0.0)   
-        consume_rate = consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate'] 
+            self.y_vec_biden = np.append(self.y_vec_biden[1:], 0.0)
+    
+    def log_metrics(self):
+       consumer_metrics = self.metrics.get_consumer_metrics()
+       print(consumer_metrics)
 
     def start_consumer(self):
         while True:

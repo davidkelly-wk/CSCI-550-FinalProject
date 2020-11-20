@@ -2,6 +2,8 @@ from kafka import KafkaConsumer
 from json import loads
 from sentiment import *
 from pylive_1line import *
+import threading
+import metrics
 
 class AverageSentimentConsumer():
     def __init__(self, topic):
@@ -14,6 +16,10 @@ class AverageSentimentConsumer():
             group_id=None,
             value_deserializer=lambda x: loads(x.decode('utf-8')))
         self.sentiment_analyzer = Sentiment()
+        self.metrics = metrics.Metrics(consumer=self.consumer)
+        timerThread = threading.Timer(10, self.log_metrics)
+        timerThread.daemon = True
+        timerThread.start()
 
         size = 100
         self.x_vec = np.linspace(0, 1, size + 1)[0:-1]
@@ -26,7 +32,7 @@ class AverageSentimentConsumer():
             if message['lang'] == 'en':
                 message = self.sentiment_analyzer.remove_url(message['text'])
                 score = self.sentiment_analyzer.score_text(message)
-                print('Message score: {} for message: {}'.format(score, message))
+                #print('Message score: {} for message: {}'.format(score, message))
         return score
 
     def average_sentiment(self, consumer):
@@ -44,19 +50,20 @@ class AverageSentimentConsumer():
                         avg_score = (avg_score + score) / 2
                     else: 
                         avg_score = score
-                print('Avg score: {} after message {}'.format(avg_score, i))
+                #print('Avg score: {} after message {}'.format(avg_score, i))
                 i += 1
                 # send to graph
                 self.y_vec[-1] = avg_score
                 self.line1 = live_plotter(self.x_vec, self.y_vec, self.line1)
                 self.y_vec = np.append(self.y_vec[1:], 0.0)
-        consume_rate = consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate']
 
+    def log_metrics(self):
+       consumer_metrics = self.metrics.get_consumer_metrics()
+       print(consumer_metrics)
 
     def start_consumer(self):
         while True:
-            fetched_records, avg_score = self.average_sentiment(self.consumer)
-            print('Records fetched: {} with avg. score : {}'.format(fetched_records, avg_score))
+            self.average_sentiment(self.consumer)
 
 if __name__ == "__main__":
     topic = input('Enter a kafka topic name: ')

@@ -11,32 +11,62 @@ rectangle "twitter" as twitter
 queue "<$kafka>" as kafka
 
 object twitter_stream_producer {
+authenticate_twitter_app()
+stream_tweets()
+log_metrics()
 on_data()
 on_error()
 }
+
 object average_sentiment_consumer {
 calculate_sentiment_score()
 average_sentiment()
+log_metrics()
+start_consumer()
 }
-object other_statistic_consumer {
-some_method()
+
+object trump_biden_producerV2 {
+authenticate_twitter_app()
+stream_tweets()
+log_metrics()
+on_data()
+on_error()
 }
-object data_aggregator {
-add_score()
-add_point_to_graph()
-update_plot()
+
+object trump_biden_consumerV2 {
+calculate_sentiment_score()
+average_sentiment()
+log_metrics()
+start_consumer()
 }
+
+
+object metrics {
+get_producer_metrics()
+get_consumer_metrics()
+get_system_metrics()
+get_size()
+write_metrics()
+}
+
 object sentiment {
 score_text()
 remove_url()
 }
 
 twitter --> twitter_stream_producer
+twitter --> trump_biden_producerV2
 twitter_stream_producer --> kafka
+trump_biden_producerV2 --> kafka
 
 kafka --> average_sentiment_consumer
-kafka --> other_statistic_consumer
+kafka --> trump_biden_consumerV2
 
 sentiment --> average_sentiment_consumer
-data_aggregator --> average_sentiment_consumer
+sentiment --> trump_biden_consumerV2
+
+metrics --> twitter_stream_producer
+metrics --> trump_biden_producerV2
+metrics --> average_sentiment_consumer
+metrics --> trump_biden_consumerV2
 @enduml

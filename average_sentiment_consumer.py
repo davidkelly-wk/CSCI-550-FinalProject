@@ -17,9 +17,6 @@ class AverageSentimentConsumer():
             value_deserializer=lambda x: loads(x.decode('utf-8')))
         self.sentiment_analyzer = Sentiment()
         self.metrics = metrics.Metrics(consumer=self.consumer)
-        timerThread = threading.Timer(10, self.log_metrics)
-        timerThread.daemon = True
-        timerThread.start()
 
         size = 100
         self.x_vec = np.linspace(0, 1, size + 1)[0:-1]
@@ -62,6 +59,9 @@ class AverageSentimentConsumer():
        print(consumer_metrics)
 
     def start_consumer(self):
+        timerThread = threading.Timer(10, self.log_metrics)
+        timerThread.daemon = True
+        timerThread.start()
         while True:
             self.average_sentiment(self.consumer)
 

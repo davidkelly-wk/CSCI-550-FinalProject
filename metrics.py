@@ -1,7 +1,7 @@
 import json
 import psutil
 import platform
-import cpuinfo
+import cpuinfo #pip install py-cpuinfo
 from kafka import KafkaConsumer, KafkaProducer
 
 
@@ -9,27 +9,47 @@ class Metrics(object):
     def __init__(self, producer = None, consumer = None):
         self.producer = producer
         self.consumer = consumer
-        self.producer_metrics = {}
-        self.producer_metrics['producer metrics'] = []
-        self.consumer_metrics = {}
-        self.consumer_metrics['consumer metrics'] = []
    
     def get_producer_metrics(self):
-        self.producer_metrics['producer metrics'] = []
-        send_rate = self.producer.metrics()['producer-metrics']['record-send-rate']
-        self.producer_metrics['producer metrics'].append({'record-send-rate': send_rate})
-        self.write_metrics('producer_metrics.txt', self.producer_metrics)
+        producer_metrics = {}
+        producer_metrics['producer metrics'] = []
+        metrics = self.producer.metrics()
+
+        send_rate = metrics['producer-metrics']['record-send-rate']
+        records_per_request = metrics['producer-metrics']['records-per-request-avg']
+        produce_throttle_time = metrics['producer-metrics']['produce-throttle-time-avg']
+
+        producer_metrics['producer metrics'].append({'record-send-rate': send_rate})
+        producer_metrics['producer metrics'].append({'records-per-request-avg': records_per_request})
+        producer_metrics['producer metrics'].append({'produce-throttle-time-avg': produce_throttle_time})
+
+        # write producer metrics
+        self.write_metrics('producer_metrics.txt', producer_metrics)
+
+        # write system metrics
         system_metrics = self.get_system_metrics()
         self.write_metrics('system_metrics.txt', system_metrics)
+
         return send_rate
 
     def get_consumer_metrics(self):
-        self.consumer_metrics['consumer metrics'] = []
-        consumption_rate = self.consumer.metrics()['consumer-fetch-manager-metrics']['records-consumed-rate']
-        self.consumer_metrics['consumer metrics'].append({'records-consumed-rate': consumption_rate})
-        self.write_metrics('consumer_metrics.txt', self.consumer_metrics)
+        consumer_metrics = {}
+        consumer_metrics['consumer metrics'] = []
+        metrics = self.consumer.metrics()
+        consumption_rate = metrics['consumer-fetch-manager-metrics']['records-consumed-rate']
+        records_per_request = metrics['consumer-fetch-manager-metrics']['records-per-request-avg']
+        request_latency = metrics['consumer-metrics']['request-latency-avg']
+
+        consumer_metrics['consumer metrics'].append({'records-consumed-rate': consumption_rate})
+        consumer_metrics['consumer metrics'].append({'records-per-request-avg': records_per_request})
+        consumer_metrics['consumer metrics'].append({'request-latency-avg': request_latency})
+        request_latency
+        self.write_metrics('consumer_metrics.txt', consumer_metrics)
+        
+        # write system metrics
         system_metrics = self.get_system_metrics()
         self.write_metrics('system_metrics.txt', system_metrics)
+
         return consumption_rate
     
     def get_system_metrics(self):

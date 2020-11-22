@@ -27,5 +27,6 @@ Make sure the topic you enter matches that above
 ## Performance Specs
 | OS             | Processor                       | Memory | Record send rate | Average records per request | Records consumed rate | Average records per request |
 | -------------- | ------------------------------- | ------ | ---------------- | --------------------------- | --------------------- | --------------------------- |
-| MacOS Catalina | 3.1 GHz Quad-Core Intel Core i7 | 16GB   | 40.06            | 1.02                        | 565.41                | 162.05                      |
+| MacOS Catalina | 3.1 GHz Quad-Core Intel Core i7 | 16GB   | 51.32            | 1.02                        | 693.12                | 162.05                      |
 | Ubunty 16+     | 3.1 GHz Quad-Core Intel Core i7 | 16GB   | 51.098           | 1.049                       | 181.67                | 83.495                      |
+| MacOS Mojave   | 1.4 GHz Intel Core i5           | 8GB    | 35.03            | 1.001                       | 443.33                | 123.001                     |
